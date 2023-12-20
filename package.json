@@ -15,11 +15,13 @@
   "license": "ISC",
   "devDependencies": {
     "@electron/rebuild": "^3.4.1",
+    "concurrently": "^8.2.2",
     "electron": "^28.0.0",
     "electron-builder": "^24.9.1"
   },
   "dependencies": {
     "electron-context-menu": "latest",
+    "electron-reload": "^2.0.0-alpha.1",
     "jquery": "latest",
     "node-pty": "latest",
     "npm-check-updates": "latest",

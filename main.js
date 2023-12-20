@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain, Menu } = require("electron");
-
+const electronReload = require("electron-reload");
+electronReload(__dirname,{});
 const fs = require("fs");
 const os = require("os");
 const pty = require("node-pty");
