@@ -1,7 +1,7 @@
 {
   "name": "eclipse",
   "version": "23.12.20",
-  "description": "",
+  "description": "A modern day text and code editor",
   "title": "Mega Project",
   "main": "main.js",
   "scripts": {
