@@ -13,10 +13,22 @@ body {
   font-style: normal;
   font-size: 14px;
   margin: 0px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  display:flex;
   padding: 0px;
+}
+
+.aside{
+  background:grey;
+  height:100%;
+  width:400px;
+  border:3px solid green;
+}
+
+main{
+  width:100%;
+  display:flex;
+  flex-Direction:column;
+  border:1px solid red;
 }
 
 .canvas{
