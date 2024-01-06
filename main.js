@@ -1,6 +1,6 @@
-const { app, BrowserWindow, ipcMain, Menu } = require("electron");
+const { app, BrowserWindow, dialog, ipcMain, Menu } = require("electron");
 const electronReload = require("electron-reload");
-electronReload(__dirname,{});
+electronReload(__dirname, {});
 const fs = require("fs");
 const os = require("os");
 const pty = require("node-pty");
@@ -21,8 +21,10 @@ function readConf() {
   return data;
 }
 
+let win;
+
 const createWindow = () => {
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
@@ -33,6 +35,38 @@ const createWindow = () => {
   });
 
   win.loadFile("index.html");
+  win.webContents.openDevTools();
+  const menuTemplate = [
+    // ... your other menu items
+    {
+      label: "File",
+      submenu: [
+        {
+          label: "Open",
+          click: async () => {
+            const result = await dialog.showOpenDialog(win, {
+              properties: ["openFile"],
+              filters: [
+                { name: "Text Files", extensions: ["txt", "text"] },
+                { name: "All Files", extensions: ["*"] },
+              ],
+            });
+
+            if (!result.canceled) {
+              const filePath = result.filePaths[0];
+              readFile(filePath);
+            }
+          },
+        },
+        { type: "separator" },
+        { role: "quit" },
+      ],
+    },
+  ];
+
+  // Create the application menu
+  const menu = Menu.buildFromTemplate(menuTemplate);
+  Menu.setApplicationMenu(menu);
 
   //Event Listeners
 
@@ -67,7 +101,7 @@ const createWindow = () => {
   });
 
   win.on("close", () => {
-    mainWindow = null;
+    win = null;
     app.quit();
   });
 
@@ -77,5 +111,18 @@ const createWindow = () => {
     }
   });
 };
+
+function readFile(filePath) {
+  // Read the content of the file
+  fs.readFile(filePath, "utf-8", (err, data) => {
+    if (err) {
+      console.error("Error reading the file:", err);
+      return;
+    }
+
+    // Send the file content to the renderer process
+    win.webContents.send("file-opened", filePath, data);
+  });
+}
 
 app.whenReady().then(createWindow);

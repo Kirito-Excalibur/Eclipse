@@ -20,7 +20,9 @@ body {
 .aside{
   background:grey;
   height:100%;
-  width:400px;
+  width:250px;
+
+  /* visibility: hidden; */
   border:3px solid green;
 }
 
@@ -28,12 +30,15 @@ main{
   width:100%;
   display:flex;
   flex-Direction:column;
-  border:1px solid red;
+  /* border:1px solid red; */
 }
 
 .canvas{
  height: 100%;
-  /* border:2px solid blue; */
+ background: #424141;
+ font-size: 20px;
+ text-wrap: wrap;
+  border:2px solid blue;
   }
 
 #terminal,

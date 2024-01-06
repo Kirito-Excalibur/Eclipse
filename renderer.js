@@ -90,3 +90,8 @@ jQuery(document).ready(function () {
     ipcRenderer.send("terminal.resize", size);
   });
 });
+
+ipcRenderer.on('file-opened', (event, filePath, data) => {
+document.getElementById("canvas").innerHTML = data;
+console.log(data);
+})
