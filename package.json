@@ -1,8 +1,8 @@
 {
   "name": "eclipse",
-  "version": "24.1.6",
+  "version": "24.1.8",
   "description": "A modern day text and code editor",
-  "title": "Mega Project",
+  "title": "Eclipse",
   "main": "main.js",
   "scripts": {
     "update-app-version": "npm version --no-git-tag-version 0.0.0 && npm version --no-git-tag-version $(date +%y.%m.%d)",

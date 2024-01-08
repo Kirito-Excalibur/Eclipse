@@ -2,6 +2,7 @@ const { app, BrowserWindow, dialog, ipcMain, Menu } = require("electron");
 const electronReload = require("electron-reload");
 electronReload(__dirname, {});
 const fs = require("fs");
+const path = require("path");
 const os = require("os");
 const pty = require("node-pty");
 const shell =
@@ -31,10 +32,14 @@ const createWindow = () => {
       nodeIntegration: true,
       contextIsolation: false,
       enableRemoteModule: true,
+      preload:path.join(__dirname + "/preload.js"),
     },
+    minWidth:800,
+    minHeight:600,
   });
 
   win.loadFile("index.html");
+
   win.webContents.openDevTools();
   const menuTemplate = [
     // ... your other menu items
@@ -63,6 +68,18 @@ const createWindow = () => {
       ],
     },
   ];
+
+  //Handle Window Resize
+  win.on('resize',()=>{
+    const[width,height]=win.getSize()
+    const[minWidth,minHeight]=win.getMinimumSize()
+    if(width<minWidth){
+      win.setSize(minWidth,height)
+    }
+    if(height<minHeight){
+      win.setSize(height,minHeight)
+    }
+  })
 
   // Create the application menu
   const menu = Menu.buildFromTemplate(menuTemplate);
@@ -96,6 +113,8 @@ const createWindow = () => {
     }
   });
 
+
+
   win.webContents.on("did-finish-load", () => {
     ptyProcess.write("clear\r");
   });
@@ -122,7 +141,13 @@ function readFile(filePath) {
 
     // Send the file content to the renderer process
     win.webContents.send("file-opened", filePath, data);
+  
   });
+
+  win.setTitle(filePath)
+
 }
+
+
 
 app.whenReady().then(createWindow);

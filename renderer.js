@@ -92,6 +92,8 @@ jQuery(document).ready(function () {
 });
 
 ipcRenderer.on('file-opened', (event, filePath, data) => {
-document.getElementById("canvas").innerHTML = data;
-console.log(data);
+document.getElementById("canvas").value = data
+
 })
+
+

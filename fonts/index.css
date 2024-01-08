@@ -20,7 +20,7 @@ body {
 .aside{
   background:grey;
   height:100%;
-  width:250px;
+  min-width:250px;
 
   /* visibility: hidden; */
   border:3px solid green;
@@ -38,6 +38,7 @@ main{
  background: #424141;
  font-size: 20px;
  text-wrap: wrap;
+ color: white;
   border:2px solid blue;
   }
 
